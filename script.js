@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     const canvas = document.getElementById('background-canvas');
     const ctx = canvas.getContext('2d');
     let particlesArray;
@@ -6,13 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const particleCount = 100;
     const particleSize = 1;
     const connectionDistance = 150;
-    const mouseRadius = 250;
-
-    let mouse = {
-        x: null,
-        y: null,
-        radius: mouseRadius
-    };
 
     function init() {
         w = canvas.width = window.innerWidth;
@@ -59,24 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.directionY = -this.directionY;
             }
 
-            let dx = mouse.x - this.x;
-            let dy = mouse.y - this.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < mouse.radius + this.size) {
-                if (mouse.x < this.x && this.x < w - this.size * 10) {
-                    this.x += 10;
-                }
-                if (mouse.x > this.x && this.x > this.size * 10) {
-                    this.x -= 10;
-                }
-                if (mouse.y < this.y && this.y < h - this.size * 10) {
-                    this.y += 10;
-                }
-                if (mouse.y > this.y && this.y > this.size * 10) {
-                    this.y -= 10;
-                }
-            }
-
             this.x += this.directionX;
             this.y += this.directionY;
             this.draw();
@@ -114,15 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('resize', init);
-    window.addEventListener('mousemove', (event) => {
-        mouse.x = event.x;
-        mouse.y = event.y;
-    });
-    window.addEventListener('mouseout', () => {
-        mouse.x = undefined;
-        mouse.y = undefined;
-    });
-
+    
     const trailContainer = document.getElementById('cursor-trail');
     const trailLength = 15;
     const trailElements = [];
@@ -158,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         trailIndex = (trailIndex + 1) % trailLength;
     });
+
 
     const sections = document.querySelectorAll('.section');
     const options = {
